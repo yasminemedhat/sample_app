@@ -8,19 +8,14 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
   test "invalid signup information" do
     get signup_path
     assert_no_difference 'User.count' do
-      post signup_path, params: { user: { name:  "",
+      post users_path, params: { user: { name:  "",
                                          email: "user@invalid",
                                          password:              "foo",
                                          password_confirmation: "bar" } }
     end
-    # check that a failed submission re-renders the "new "action
     assert_template 'users/new'
     assert_select 'div#error_explanation'
-    assert_select 'div.alert.alert-danger'
-    assert_select "li", "Name can't be blank"
-    assert_select "li", "Email is invalid"
-    assert_select "li", "Password confirmation doesn't match Password"
-    assert_select 'form[action="/signup"]'
+    assert_select 'div.field_with_errors'
   end
 
 
