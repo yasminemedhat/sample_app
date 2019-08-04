@@ -15,5 +15,7 @@ Rails.application.routes.draw do
 
   #ensures that our app responds to the RESTful URLs
   resources :users
+  resources :account_activations, only: [:edit]
+
 
 end
